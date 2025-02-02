@@ -10,7 +10,7 @@
 2. Open a command promt in the folder where the Python file is.
 3. 1: For Windows type "python [name-of-the-file].py"
 3. 2: For Linux type "python3 [name-of-the-file].py"
-3.1 : For Mac type "python3 [name-of-the-file].py"
+3. 1 : For Mac type "python3 [name-of-the-file].py"
 
 #Using the programm
 1. First you have to paste the file path of the source playlist file (either wpl or m3u)
