@@ -23,54 +23,34 @@ def read_playlist(file_path):
         if "<smil>" in content.lower():
             try:
                 tree = ET.fromstring(content)
-                print("XML-Baum erfolgreich geparst.")
+                print("XML-Baum successfully parsed.")
                 for media in tree.findall(".//media"):  # Ohne Namespace
                     path = media.get("src")
                     if path:
                         print(f"Gefundener Pfad: {path}")
                         file_paths.append(path)
                     else:
-                        print("<media>-Element ohne 'src'-Attribut gefunden.")
+                        print("found <media>-element without 'src'-attribute.")
                 if not file_paths:
-                    print("Keine gültigen Pfade im <media>-Element gefunden")
+                    print("No valid paths found in the  <media>-Element.")
 
             except ET.ParseError as e:
-                print(f"Fehler beim Parsen des XML (nach Whitespace-Entfernung): {e}")
-                print("Inhalt nach Whitespace-Entfernung:")
+                print(f"Error parsing the XML (after Whitespace-removing): {e}")
+                print("Content after whitespace-removing:")
                 print(content)
                 return None
 
-        elif "#EXTM3U" in content:
-            print("M3U-Playlist erkannt.")
-            for line in content.splitlines():
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                if line.startswith("file:///"):
-                    parsed = urlparse(line)
-                    path = unquote(parsed.path).lstrip("/")
-                elif line[0].isalpha() and line[1] == ':':
-                    drive_letter = line[0]
-                    path = os.path.join(drive_letter, line[2:])
-                elif "://" not in line:
-                    base_path = os.path.dirname(file_path)
-                    absolute_path = os.path.abspath(os.path.join(base_path, line))
-                    path = absolute_path
-                else:
-                    print(f"Ignoriere Zeile (URL oder unbekanntes Format): {line}")
-                    continue #wichtig, damit kein None in file_paths landet
-                print(f"Gefundener Pfad: {path}")
-                file_paths.append(path)
-
+#        elif "#EXTM3U" in content:
+#            print("M3U-Playlist erkannt.")
         else:
-            print("Unbekanntes Playlist-Format. Nur .wpl und .m3u werden unterstützt.")
+            print("Unbekanntes Playlist-Format. Nur .wpl wird unterstützt unterstützt.")
             return None
 
     except FileNotFoundError:
-        print(f"Playlist-Datei nicht gefunden: {file_path}")
+        print(f"Playlist file not found: {file_path}")
         return None
     except Exception as e:
-        print(f"Fehler beim Lesen der Playlist: {e}")
+        print(f"Error while reading the playlist file: {e}")
         return None
     return file_paths
 
@@ -87,44 +67,44 @@ def copy_files(file_paths, destination_folder):
                 if mime_type and mime_type.startswith("audio/"):
                     destination_path = os.path.join(destination_folder, os.path.basename(file_path))
                     if os.path.exists(destination_path):
-                        print(f"Datei existiert bereits im Ziel: {os.path.basename(file_path)}, wird übersprungen.")
-                        log_entry(log_file, f"Übersprungen: {file_path} - Datei existiert bereits im Ziel.")
+                        print(f"File already exits in target directory: {os.path.basename(file_path)}, is skipped.")
+                        log_entry(log_file, f"Skipped: {file_path} - File already exist in target directory.")
                         continue
                     shutil.copy2(file_path, destination_path)
-                    print(f"Kopiert: {file_path}")
-                    log_entry(log_file, f"Erfolgreich kopiert: {file_path}")
+                    print(f"Copied: {file_path}")
+                    log_entry(log_file, f"Copied successfully: {file_path}")
                 else:
-                    print(f"Datei ist keine Audiodatei oder MIME-Typ unbekannt: {file_path}")
-                    log_entry(log_file, f"Fehler: Datei ist keine Audiodatei oder MIME-Typ unbekannt - {file_path}")
+                    print(f"File is no audio file or unknown MIME-Type: {file_path}")
+                    log_entry(log_file, f"Error: File is no audio file or unknown MIME-Typ - {file_path}")
             else:
-                print(f"Datei nicht gefunden: {file_path}")
-                log_entry(log_file, f"Fehler: Datei nicht gefunden - {file_path}")
+                print(f"File not found {file_path}")
+                log_entry(log_file, f"Error: File not found - {file_path}")
         except Exception as e:
-            print(f"Fehler beim Kopieren der Datei {file_path}: {e}")
-            log_entry(log_file, f"Fehler beim Kopieren: {file_path} - {e}")
+            print(f"Error while copying the file {file_path}: {e}")
+            log_entry(log_file, f"Error while copying the file: {file_path} - {e}")
 
 if __name__ == "__main__":
-    print("Programm zum Kopieren von Musikdateien aus einer Playlist")
+    print("Program to extract music files from a playlist.")
 
     try:
-        playlist_path = input("Pfad zur Playlist-Datei (WPL oder M3U): ").strip()
-        print(f"Eingegebener Playlist-Pfad: {playlist_path}")
+        playlist_path = input("Path to playlist file (.wpl): ").strip()
+        print(f"Given playlist path: {playlist_path}")
 
         files = read_playlist(playlist_path)
 
         if files is None:
-            print("Fehler beim Lesen der Playlist.")
+            print("Error while reading the playlist.")
             exit()
         elif not files:
-            print("Die Playlist enthält keine gültigen Einträge.")
+            print("The playlist does not contain any valid entries.")
             exit()
 
-        destination_folder = input("Pfad zum Zielordner: ").strip()
-        print(f"Eingegebener Zielordner: {destination_folder}")
+        destination_folder = input("Path to target directory: ").strip()
+        print(f"Given target directory: {destination_folder}")
         os.makedirs(destination_folder, exist_ok=True)
 
         copy_files(files, destination_folder)
-        print("Fertig.")
+        print("Finihsed.")
 
     except Exception as e:
-        print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+        print(f"An unexpected error occurred.: {e}")
