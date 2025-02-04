@@ -20,7 +20,7 @@ def read_playlist(file_path):
                     else:
                         file_paths.append(line)
     except Exception as e:
-        print(f"Fehler beim Lesen der Playlist: {e}")
+        print(f"Error while reading the playlist: {e}")
     return file_paths
 
 # Funktion zum Hinzufügen eines Log-Eintrags
@@ -38,37 +38,37 @@ def copy_files(file_paths, destination_folder):
             if os.path.isfile(file_path):
                 # Datei in das Zielverzeichnis kopieren
                 shutil.copy(file_path, destination_folder)
-                print(f"Kopiert: {file_path}")
-                log_entry(log_file, f"Erfolgreich kopiert: {file_path}")
+                print(f"Copied: {file_path}")
+                log_entry(log_file, f"Copied successfully: {file_path}")
             else:
-                print(f"Datei nicht gefunden: {file_path}")
-                log_entry(log_file, f"Fehler: Datei nicht gefunden - {file_path}")
+                print(f"File not found: {file_path}")
+                log_entry(log_file, f"Error: File not found - {file_path}")
         except Exception as e:
-            print(f"Fehler beim Kopieren der Datei {file_path}: {e}")
-            log_entry(log_file, f"Fehler beim Kopieren: {file_path} - {e}")
+            print(f"Error while copying the file: {file_path}: {e}")
+            log_entry(log_file, f"Error while copying the file: {file_path} - {e}")
 
 if __name__ == "__main__":
-    print("Programm zum Kopieren von Musikdateien aus einer Playlist")
+    print("Program to extract music files from a playlist.")
     # Eingabe der Quell-Playlist
-    playlist_path = input("Pfad zur Playlist-Datei (WPL oder M3U): ").strip()
+    playlist_path = input("Path to playlist file (.m3u): ").strip()
     if not os.path.isfile(playlist_path):
-        print("Die angegebene Playlist-Datei existiert nicht.")
+        print("Playlist file not found: {playlist_path}")
         exit()
 
     # Eingabe des Zielverzeichnisses
-    destination_folder = input("Pfad zum Zielordner: ").strip()
+    destination_folder = input("Path to target directory: ").strip()
     if not os.path.exists(destination_folder):
         try:
             os.makedirs(destination_folder)
         except Exception as e:
-            print(f"Fehler beim Erstellen des Zielordners: {e}")
+            print(f"Error while creating target directory: {e}")
             exit()
 
     # Playlist einlesen und Dateien kopieren
     files = read_playlist(playlist_path)
     if not files:
-        print("Die Playlist enthält keine gültigen Einträge oder konnte nicht gelesen werden.")
+        print("The playlist does not contain any valid entries.")
     else:
         copy_files(files, destination_folder)
 
-    print("Fertig.")
+    print("Finished.")

@@ -23,7 +23,7 @@ def read_playlist(file_path):
         if "<smil>" in content.lower():
             try:
                 tree = ET.fromstring(content)
-                print("XML-Baum successfully parsed.")
+                print("XML-Tree successfully parsed.")
                 for media in tree.findall(".//media"):  # Ohne Namespace
                     path = media.get("src")
                     if path:
@@ -43,7 +43,7 @@ def read_playlist(file_path):
 #        elif "#EXTM3U" in content:
 #            print("M3U-Playlist erkannt.")
         else:
-            print("Unbekanntes Playlist-Format. Nur .wpl wird unterstützt unterstützt.")
+            print("Unknown playlist format. Only .wpl is supported.")
             return None
 
     except FileNotFoundError:
