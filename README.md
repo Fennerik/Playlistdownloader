@@ -1,15 +1,17 @@
 # Playlistextractor
 ## A simple programm that allows you to copy all the content of a ".m3u"- or ".wpl"-Playlist file at once to another file path
 
+## Important note: Since version 1.1 there is only one version of the programm for both wpl and m3u files and not two different versions like before. See more at release notes.
+
 ## Note: This programm is using Python. To use it you need to have Python3 installed on your system.
 
 ## To execute the programm you need to do the following steps:
-1. Download either the m3u or wpl version of the programm according to your use case.
+1. Download th latest version of the programm according to your use case.
 2. Open a command promt in the folder where the Python file is.
 3. The next step depends on your operating system:
-   For Windows type "python [name-of-the-file].py"
-   For Linux type "python3 [name-of-the-file].py"
-   For Mac type "python3 [name-of-the-file].py"
+   For Windows type "python main.py"
+   For Linux type "python3 main.py"
+   For Mac type "python3 main.py"
 
 ## Using the programm
 1. First you have to paste the file path of the source playlist file (either wpl or m3u)
