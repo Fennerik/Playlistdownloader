@@ -1,7 +1,5 @@
-# Playlistdownloader
+# Playlistextractor
 ## A simple programm that allows you to copy all the content of a ".m3u"- or ".wpl"-Playlist file at once to another file path
-
-## Please notice this programm is still in beta phasis
 
 ## Note: This programm is using Python. To use it you need to have Python3 installed on your system.
 
