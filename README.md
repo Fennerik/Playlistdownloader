@@ -6,7 +6,7 @@
 ## Note: This programm is using Python. To use it you need to have Python3 installed on your system.
 
 ## To execute the programm you need to do the following steps:
-1. Download th latest version of the programm according to your use case.
+1. Download th latest version of the programm.
 2. Open a command promt in the folder where the Python file is.
 3. The next step depends on your operating system:
    For Windows type "python main.py"
@@ -14,7 +14,7 @@
    For Mac type "python3 main.py"
 
 ## Using the programm
-1. First you have to paste the file path of the source playlist file (either wpl or m3u)
+1. First you have to paste the file path of the source playlist file (wpl or m3u)
 2. After that you have to type in the target file path
 3. Now the programm should start working
 
