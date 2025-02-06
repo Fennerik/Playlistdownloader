@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 import shutil
-import re
 import xml.etree.ElementTree as ET
 from urllib.parse import urlparse, unquote
 from datetime import datetime
@@ -11,6 +10,7 @@ import threading
 
 root = tk.Tk()
 root.title("Playlistextractor Stable 2.0")
+
 
 # Variablen zum Speichern der Dateipfade
 playpath = tk.StringVar(value="Playlist file path: None")  # Debugging
@@ -34,6 +34,7 @@ def select_output_folder():
         destination_folder.set(f"Output folder: {folderpath}")
 
 def start_extraction():
+    logpreview.config(state=tk.NORMAL)  # Ermöglicht das Hinzufügen von Text
     logpreview.insert(tk.END, playpath.get() + "\n" + destination_folder.get() + "\n")
     playlist_path = playpath.get().replace("File path: ", "")  # Den Pfad ohne "File path: " verwenden
     if not os.path.isfile(playlist_path):
@@ -118,6 +119,7 @@ def extract_files(file_paths, destination_folder):
         except Exception as e:
             log_to_both(f"Error copying file: {file_path} - {e}\n")
     log_to_both(f"Finished \n")
+    logpreview.config(state=tk.DISABLED)  # Textfeld wieder schreibgeschützt machen
 
 # GUI-Elemente erstellen
 Header = tk.Label(root, text="Playlistextractor Stable 2.0", font=("Gill Sans", 24))
@@ -137,12 +139,13 @@ outshow.grid(row=2, column=0, padx=10, pady=5, sticky="w")
 buttonout = tk.Button(root, text="Select output folder", command=select_output_folder, height=1, width=15)
 buttonout.grid(row=2, column=1, padx=10, pady=5)
 
-
 buttonstart = tk.Button(root, command=start_extraction, text="Start extraction", height=2, width=30)
 buttonstart.grid(row=3, column=0, columnspan=2, pady=10)
 
 logpreview = tk.Text(root, height=10, width=90, font=("Gill Sans", 12))
 logpreview.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+
+logpreview.config(state=tk.DISABLED)  # Textfeld initial auf read-only setzen
 
 # Setze die Spaltenbreiten, damit Buttons nicht verschoben werden
 root.grid_columnconfigure(0, weight=1)  # Linke Spalte wächst mit
