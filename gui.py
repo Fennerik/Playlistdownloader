@@ -12,7 +12,7 @@ root = tk.Tk()
 root.title("Playlistextractor Stable 2.0")
 
 
-# Variablen zum Speichern der Dateipfade
+# Variable to save the file path
 playpath = tk.StringVar(value="Playlist file path: None")  # Debugging
 destination_folder = tk.StringVar(value="Output folder: None")  # Debugging
 
