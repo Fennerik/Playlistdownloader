@@ -12,8 +12,8 @@
 2. Open a command promt in the folder where the Python file is.
 3. The next step depends on your operating system:
    For Windows type "python main.py" or "python gui.py" (depends on the version you want to use)
-   For Linux type "python3 main.py" or "python gui.py" (depends on the version you want to use)
-   For Mac type "python3 main.py" or "python gui.py" (depends on the version you want to use)
+   For Linux type "python3 main.py" or "python3 gui.py" (depends on the version you want to use)
+   For Mac type "python3 main.py" or "python3 gui.py" (depends on the version you want to use)
 
 ## Using the programm
 1. First you have to paste the file path of the source playlist file (wpl or m3u)
